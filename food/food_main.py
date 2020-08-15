@@ -49,7 +49,7 @@ def crawling(cafeteria, date=None):
     # 식단이 없을 때
     if not menus:
         string = '식단이 제공되지 않습니다'
-    if "info" not in menus[0].keys():
+    elif "info" not in menus[0].keys():
         for x in menus:
             string += x["menu"] + "\n"
             string += x["price"] + "원\n"
