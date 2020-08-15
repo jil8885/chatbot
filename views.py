@@ -327,22 +327,22 @@ def library(request):
             location = 0
         elif "법학" in answer:
             if "대학원" in answer:
-                location = 1
+                location = 5
             elif "제1" in answer:
-                location = 2
+                location = 6
             elif "A" in answer:
-                location = 3
+                location = 7
             elif "B" in answer:
-                location = 4
+                location = 8
         else:
             if "제1" in answer:
-                location = 5
+                location = 1
             elif "제2" in answer:
-                location = 6
+                location = 2
             elif "제3" in answer:
-                location = 7
+                location = 3
             elif "제4" in answer:
-                location = 8
+                location = 4
         string = crawling_lib2(int(location))
         response = insert_text(string)
         for lib in seoul_lib:
