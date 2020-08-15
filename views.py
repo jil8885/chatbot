@@ -302,7 +302,7 @@ def library(request):
     user_info = get_user(user)
     block_id = '5e0df82cffa74800014bc838'
     seoul_lib = ['제1열람실', '제2열람실', '제3열람실', '제4열람실', '법학 대학원열람실', '법학 제1열람실', '법학 제2열람실A', '법학 제2열람실B']
-    erica_lib = ['제1열람실', '제3열람실', '제4열람실', '제5열람실']
+    erica_lib = ['제1열람실', '제2열람실', '제3열람실', '제4열람실']
     if not user_info:
         if '서울' in answer:
             create_user(user, 1)

@@ -1,8 +1,10 @@
 import requests, os
 from bs4 import BeautifulSoup
 import datetime
-
-from food_crawl import Cafeteria, get_recipe, get_recipe_from_firebase
+try:
+    from .food_crawl import Cafeteria, get_recipe, get_recipe_from_firebase
+except:
+    from food_crawl import Cafeteria, get_recipe, get_recipe_from_firebase
 def make_string_food(cafeteria):
     string = crawling(cafeteria)
     return string

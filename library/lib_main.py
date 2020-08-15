@@ -32,6 +32,14 @@ def crawling_lib(location = None):
         remained = info.to_dict()['total'] - info.to_dict()['active']
         string += f"잔여좌석 : {remained}석\n"
         string += f"점유율 : {info.to_dict()['occupied']}\n"
+    elif location == 2:
+        info = erica_collec.collection('library_list').document('제2열람실').get()
+        string += info.id + "\n"
+        string += f"총 좌석 : {info.to_dict()['total']}석\n"
+        string += f"사용중 : {info.to_dict()['active']}석\n"
+        remained = info.to_dict()['total'] - info.to_dict()['active']
+        string += f"잔여좌석 : {remained}석\n"
+        string += f"점유율 : {info.to_dict()['occupied']}\n"
     elif location == 3:
         info = erica_collec.collection('library_list').document('제3열람실').get()
         string += info.id + "\n"
@@ -42,14 +50,6 @@ def crawling_lib(location = None):
         string += f"점유율 : {info.to_dict()['occupied']}\n"
     elif location == 4:
         info = erica_collec.collection('library_list').document('제4열람실').get()
-        string += info.id + "\n"
-        string += f"총 좌석 : {info.to_dict()['total']}석\n"
-        string += f"사용중 : {info.to_dict()['active']}석\n"
-        remained = info.to_dict()['total'] - info.to_dict()['active']
-        string += f"잔여좌석 : {remained}석\n"
-        string += f"점유율 : {info.to_dict()['occupied']}\n"
-    elif location == 5:
-        info = erica_collec.collection('library_list').document('제5열람실').get()
         string += info.id + "\n"
         string += f"총 좌석 : {info.to_dict()['total']}석\n"
         string += f"사용중 : {info.to_dict()['active']}석\n"
