@@ -22,26 +22,30 @@ def crawling(cafeteria, date=None):
     string += "%s년%s월%s일 "%(today.year, today.month, today.day)
     cafeteria_code = cafeterias[cafeteria]
     recipe = get_recipe(cafeteria_code)
-    if today.hour < 10:
-        if "조식" in recipe.keys():
-            string += "조식\n"
-            menus = recipe["조식"]
-        else:
+    if "중식" in recipe.keys():
+        if today.hour < 10:
+            if "조식" in recipe.keys():
+                string += "조식\n"
+                menus = recipe["조식"]
+            else:
+                string += "중식\n"
+                menus = recipe["중식"]            
+        elif today.hour < 15:
             string += "중식\n"
-            menus = recipe["중식"]            
-    elif today.hour < 15:
-        string += "중식\n"
-        menus = recipe["중식"]
-    elif today.hour < 19:
-        if "석식" in recipe.keys():
-            string += "석식\n"
-            menus = recipe["석식"]
+            menus = recipe["중식"]
+        elif today.hour < 19:
+            if "석식" in recipe.keys():
+                string += "석식\n"
+                menus = recipe["석식"]
+            else:
+                string += "중식\n"
+                menus = recipe["중식"]  
         else:
-            string += "중식\n"
-            menus = recipe["중식"]  
+            menus = [{"info": "미운영 시간입니다."}]
+            string = "식당 운영시간이 아닙니다."
     else:
-        menus = [{"info": "미운영 시간입니다."}]
-        string = "식당 운영시간이 아닙니다."
+        menus = []
+
     # 식단이 없을 때
     if not menus:
         string = '식단이 제공되지 않습니다'
@@ -79,26 +83,34 @@ def crawling2(cafeteria, date=None):
     string += "%s년%s월%s일 "%(today.year, today.month, today.day)
     cafeteria_code = cafeterias[cafeteria]
     recipe = get_recipe(cafeteria_code)
-    if today.hour < 10:
-        if "조식" in recipe.keys():
-            string += "조식\n"
-            menus = recipe["조식"]
-        else:
+    if "중식" in recipe.keys():
+        if today.hour < 10:
+            if "조식" in recipe.keys():
+                string += "조식\n"
+                menus = recipe["조식"]
+            else:
+                string += "중식\n"
+                menus = recipe["중식"]            
+        elif today.hour < 15:
             string += "중식\n"
-            menus = recipe["중식"]            
-    elif today.hour < 15:
-        string += "중식\n"
-        menus = recipe["중식"]
-    elif today.hour < 19:
-        if "석식" in recipe.keys():
-            string += "석식\n"
-            menus = recipe["석식"]
+            menus = recipe["중식"]
+        elif today.hour < 19:
+            if "석식" in recipe.keys():
+                string += "석식\n"
+                menus = recipe["석식"]
+            else:
+                string += "중식\n"
+                menus = recipe["중식"]  
         else:
-            string += "중식\n"
-            menus = recipe["중식"]  
+            menus = [{"info": "미운영 시간입니다."}]
+            string = "식당 운영시간이 아닙니다."
     else:
-        menus = [{"info": "미운영 시간입니다."}]
-        string = "식당 운영시간이 아닙니다."
+        if "중식/석식" in recipe.keys():
+            string += "중식/석식\n"
+            menus = recipe["중식/석식"]
+    if "분식" in recipe.keys():
+        string += "분식\n"
+        menus = recipe["분식"]            
     # 식단이 없을 때
     if not menus:
         string = '식단이 제공되지 않습니다'
