@@ -2,7 +2,7 @@ import requests, os
 from bs4 import BeautifulSoup
 import datetime
 
-from .food_crawl import Cafeteria, get_recipe
+from food_crawl import Cafeteria, get_recipe, get_recipe_from_firebase
 def make_string_food(cafeteria):
     string = crawling(cafeteria)
     return string
@@ -21,7 +21,7 @@ def crawling(cafeteria, date=None):
     # 시간별 조식, 중식, 석식을 나눔
     string += "%s년%s월%s일 "%(today.year, today.month, today.day)
     cafeteria_code = cafeterias[cafeteria]
-    recipe = get_recipe(cafeteria_code)
+    recipe = get_recipe_from_firebase(cafeteria_code)
     if "중식" in recipe.keys():
         if today.hour < 10:
             if "조식" in recipe.keys():
@@ -82,7 +82,7 @@ def crawling2(cafeteria, date=None):
     # 시간별 조식, 중식, 석식을 나눔
     string += "%s년%s월%s일 "%(today.year, today.month, today.day)
     cafeteria_code = cafeterias[cafeteria]
-    recipe = get_recipe(cafeteria_code)
+    recipe = get_recipe_from_firebase(cafeteria_code)
     if "중식" in recipe.keys():
         if today.hour < 10:
             if "조식" in recipe.keys():
@@ -122,4 +122,3 @@ def crawling2(cafeteria, date=None):
         if string[-1] == '\n':
             string = string[:-1]
     return string.strip()
-

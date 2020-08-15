@@ -2,8 +2,17 @@ from enum import Enum
 import requests
 from lxml.cssselect import CSSSelector
 from lxml.html import fromstring
+import datetime
 
 from utils import *
+# Google firebase
+from firebase_admin import credentials, firestore, initialize_app
+import firebase_admin
+
+def get_cred():
+    # cred = credentials.ApplicationDefault()
+    cred = credentials.Certificate('C:\\Users\\Jeongin\\Downloads\\personal-sideprojects-c013420f3313.json')
+    return cred
 
 class Cafeteria(Enum):
     student_seoul_1 = "1"
@@ -20,6 +29,31 @@ class Cafeteria(Enum):
     foodcoart_erica = "14"
     changbo_erica = "15"
 
+def get_recipe_from_firebase(cafeteria: Cafeteria):
+    if (not len(firebase_admin._apps)):
+        cred = get_cred()
+        initialize_app(cred, {'projectId': 'personal-sideprojects'})
+    db = firestore.client()
+    fooddb = db.collection("foodinfo")
+    food_doc = fooddb.document(cafeteria.value)
+    now = datetime.datetime.now()
+    try:
+        if now.day != food_doc.get().to_dict()['date'].day:
+            result = get_recipe(cafeteria)
+            food_doc.update({
+                'date' : now,
+                'result' : result
+            })
+            return result
+        else:
+            return dict(food_doc.get().to_dict()['result'])
+    except:
+        result = get_recipe(cafeteria)
+        food_doc.set({
+            'date' : now,
+            'result' : result
+        })
+        return result
 
 def get_recipe(cafeteria : Cafeteria, url="https://www.hanyang.ac.kr/web/www/re"):
     ret = {}
